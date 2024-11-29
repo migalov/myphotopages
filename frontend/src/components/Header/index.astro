@@ -1,6 +1,7 @@
 ---
 import qs from "qs";
 import Burger from "../Buttons/Burger.astro";
+import ArrowIcon from "../Icons/Arrow.astro";
 
 const params = {
     filters: {
@@ -17,7 +18,24 @@ const queryString = qs.stringify(params, { encode: true });
 
 const data = await fetch(`${import.meta.env.HOST_API}/menus?${queryString}`).then(res => res.json()).then(res => res.data[0]);
 ---
-<header class="mpp-headers content-grid" style="background-color: rgb(238, 227, 74);">
+<svg aria-hidden="true"
+  style="position: absolute; width: 0; height: 0; overflow: hidden"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <symbol id="icon-arrow" viewBox="0 0 16 16">
+        <g clip-path="url(#clip0_10_133)">
+        <path d="M1 1L6 6L11 1" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_10_133">
+        <rect width="12" height="7" fill="white"/>
+        </clipPath>
+        </defs>
+    </symbol>
+  </defs>
+</svg>
+<header class="mpp-headers content-grid">
     <div class="mpp-header-mobile">
       <div class="mpp-contacts">
         <a href="https://t.me/Myphotopages_bot" class="mpp-contacts-icon">
@@ -67,14 +85,17 @@ const data = await fetch(`${import.meta.env.HOST_API}/menus?${queryString}`).the
           </svg>
         </a>
       </div>
+      <div class="mpp-mobile-menu" style="--top-position: 6rem; position: fixed;">
+
+      </div>
       <a href="/"><img class="logo" src="https://static.wow2print.com/storage/445/content/image/24598697365f1bb7936c404.39289550.svg"></a>
-      <Burger classList={["menu-button", "mpp-burger"]} />
+      <Burger classList={["menu-button", "mpp-burger"]} name="main-menu" />
     </div>
-    <nav class="mpp-main-menu" style="background-color: rgb(255, 219, 175);">
-        <ul>
+    <nav class="mpp-main-menu full-width">
+        <ul class="mpp-main-menu-list-lvl-1">
             {
                 data.listItems.map( (item, index) => 
-                    <li class="mpp-main-menu-list-lvl-1">
+                    <li>
                         {
                             item.href && <a href={item.href}>{item.title}</a>
                         }
@@ -82,17 +103,46 @@ const data = await fetch(`${import.meta.env.HOST_API}/menus?${queryString}`).the
                             !item.href && <span>{item.title}</span>
                         }
                         {
-                            item?.listItems.length > 0 && <input id={`item-lvl-1-${item.id}`} type="checkbox" checked={index === 0 && "checked"} />
+                            item?.listItems.length > 0 &&
+                            <>
+                                
+                                <input name={`item-lvl-1`} id={`item-lvl-1-${item.id}`} type="radio" checked={index === 0 && "checked"} />
+                                <label for={`item-lvl-1-${item.id}`}>
+                                    <ArrowIcon />
+                                </label>
+                            </>
+                            
                         }
-                        <ul class="content-grid">
-                            {
-                                item.listItems.map( _item => 
-                                    <li>
-                                        <a href={_item.href}>{_item.title}</a>
-                                    </li>
-                                )
-                            }
-                        </ul>
+                        {
+                            item?.listItems.length > 0 && 
+                            <nav class="mpp-dropdown-navigation content-grid" style="--top-position: 6rem;">
+                                <div class="mpp-dropdown-navigation-inner">
+                                    <ul class="mpp-main-menu-list-lvl-2">
+                                        {
+                                            item.listItems.map( _item => 
+                                                <li>
+                                                    <a href={_item.href}>{_item.title}</a>
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
+                                    {
+                                        // item.href == "/fotoknigi" &&
+                                        // <div class="mpp-navigation-previews">
+                                        //     <figure class="mpp-main-menu-dropdown-preview">
+                                        //         <img loading="lazy" src="https://static.wow2print.com/storage/445/content/image/57338934165f3d4ec4c6b85.03225077.webp" />
+                                        //         <figcaption>Выпускные оптом. Персональное предложение по печати альбомовот 1000 экз. </figcaption>
+                                        //     </figure>
+                                        //     <figure class="mpp-main-menu-dropdown-preview">
+                                        //         <img loading="lazy" src="https://static.wow2print.com/storage/445/content/image/57338934165f3d4ec4c6b85.03225077.webp" />
+                                        //         <figcaption>Выпускные оптом. Персональное предложение по печати альбомовот 1000 экз. </figcaption>
+                                        //     </figure>
+                                        // </div>
+                                    }    
+                                </div>
+                                
+                            </nav>
+                        }
                     </li>
                 )
             }
@@ -103,10 +153,12 @@ const data = await fetch(`${import.meta.env.HOST_API}/menus?${queryString}`).the
 
 <style lang="scss" is:global>
     .mpp-headers {
+
         & * {
-            padding: 0;
-            margin: 0;
-            list-style-type: none;            
+            // padding: 0;
+            // margin: 0;
+            list-style-type: none;    
+            transition: all ease .5s;        
         }
 
         & a {
@@ -117,12 +169,12 @@ const data = await fetch(`${import.meta.env.HOST_API}/menus?${queryString}`).the
         &.content-grid {
             row-gap: 0;
         }
-    }
-    .mpp-headers * {
 
-    }
-    .mpp-headers a {
-
+        & :is(ul,li) {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
     }
     .mpp-header-mobile {
         display: grid;
@@ -131,10 +183,6 @@ const data = await fetch(`${import.meta.env.HOST_API}/menus?${queryString}`).the
         padding: .6rem 0;
         font-size: .75em;
         font-weight: 600;
-
-        // & .logo {
-        //     margin: 0 11vw 0 0;
-        // }
     }
 
     .mpp-contacts {
@@ -149,40 +197,114 @@ const data = await fetch(`${import.meta.env.HOST_API}/menus?${queryString}`).the
     }
 
     .mpp-main-menu {
-        overflow-x: scroll;
-        & > ul {
+        overflow-x: auto;
 
+        & :is(a, span) {
+            font-size: .75em;
+            font-weight: 600;
+        }
+
+        &::-webkit-scrollbar {
+            height: 2px;
+            width: 2px;
+        }
+        &::-webkit-scrollbar-track {
+            border-radius: 0px;
+            background-color: #DFE9EB;
+        }
+
+        &::-webkit-scrollbar-track:hover {
+            background-color: #B8C0C2;
+        }
+
+        &::-webkit-scrollbar-track:active {
+            background-color: #B8C0C2;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-color: #000000;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: #1f1f1f;
+        }
+
+        &::-webkit-scrollbar-thumb:active {
+        background-color: #414141;
+        }
+
+    }
+
+    .mpp-main-menu-list-lvl-1 {
+        display: flex;
+        align-items: center;
+        column-gap: 1em;
+
+        & > li {
             display: flex;
             align-items: center;
-            column-gap: 3em;
-            & > li {
+
+            &:last-child {
+                padding-right: 2rem;
+            }
+
+            & > :is(a, span) {
+                display: inline-block;
+                padding: .35em 0;
                 white-space: nowrap;
-                position: relative;
-                &:has(input:checked) {
-                    & > ul {
+            }
+
+            &:has( > input:checked) {
+                .mpp-dropdown-navigation {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            &:hover {
+                @media (min-width: 768px) {
+                    & .mpp-dropdown-navigation {
                         display: grid;
-                        row-gap: 1em;
-                        // flex-direction: column;
                     }
                 }
-                & > a {
-                    display: inline-block;
-                    padding: .35em 0;
-                }
-                & > ul {
-                    display: none;
-                    position: fixed;
-                    top: 7rem;
-                    z-index: 1;
-                    left: 0;
-                    right: 0;
-                    background-color: #757575;
+            }
+
+            & input {
+                appearance: none;
+            }
+
+            & input:checked + label {
+                transform: rotate(180deg);
+                transform-origin: 50% 55%;
+                & svg path {
+                    stroke: var(--primaryColor);
                 }
             }
         }
-        & a {
-            font-size: .75em;
-            font-weight: 600;
+
+    }
+
+    .mpp-main-menu-list-lvl-2 {
+        display: grid;
+        row-gap: 1em;
+    }
+
+    .mpp-dropdown-navigation {
+
+        position: fixed;
+        top: var(--top-position);
+        z-index: 1;
+        left: 0;
+        right: 0;
+        padding: 1.2rem 2rem;
+        background-color: #757575;
+        padding: 1em 0;
+        transform: translateX(-100%);
+        opacity: 0;
+        &.content-grid {
+            // display: none;
+            
         }
     }
 
@@ -190,11 +312,35 @@ const data = await fetch(`${import.meta.env.HOST_API}/menus?${queryString}`).the
         width: min-content;
         margin-left: auto;
     }
+
+    .mpp-navigation-previews {
+        @media (max-width: 992px) {
+            display: none;
+        }
+    }
+
 </style>
 
 <script>
+    const navigationCheckboxes = document.querySelectorAll(`.mpp-main-menu-list-lvl-1 > li > input[type="radio"]`);
     const fixedDropMenu = () => {
-        
+        const headerHeight = document.querySelector(".mpp-headers").clientHeight;
+        document.querySelectorAll(".mpp-dropdown-navigation").forEach(list => {
+            list.style.setProperty('--top-position', `${headerHeight}px`);
+        })
     }
-    document.querySelector(".mpp-headers")
+    const resetNavigationCheckboxes = () => {
+        navigationCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+    }
+    // navigationCheckboxes.forEach( checkbox => {
+    //     checkbox.addEventListener("click", (_checkbox) => {
+    //         let id = _checkbox.target.id;
+    //         if ()
+    //     })
+    // });
+    document.addEventListener("DOMContentLoaded", fixedDropMenu);
+    window.addEventListener("resize", fixedDropMenu);
+
 </script>

@@ -1,8 +1,8 @@
 ---
-const {classList} = Astro.props;
+const {classList, name} = Astro.props;
 ---
 
-<label for="main-menu" class:list={classList} aria-labelledby="menuButtonLabel">
+<label for={name} class:list={classList} aria-labelledby="menuButtonLabel">
     <input id="main-menu" class="menu-button__line" type="checkbox">
     <!-- <span>
         <span id="menuButtonLabel" style="display: none">Menu Button</span>
