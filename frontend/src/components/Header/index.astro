@@ -1,0 +1,200 @@
+---
+import qs from "qs";
+import Burger from "../Buttons/Burger.astro";
+
+const params = {
+    filters: {
+        name: 'main'
+    },
+    populate: {
+        listItems: {
+            populate: "*"
+        }
+    }
+};
+
+const queryString = qs.stringify(params, { encode: true });
+
+const data = await fetch(`${import.meta.env.HOST_API}/menus?${queryString}`).then(res => res.json()).then(res => res.data[0]);
+---
+<header class="mpp-headers content-grid" style="background-color: rgb(238, 227, 74);">
+    <div class="mpp-header-mobile">
+      <div class="mpp-contacts">
+        <a href="https://t.me/Myphotopages_bot" class="mpp-contacts-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 30 30"
+            fill="none"
+          >
+            <rect x="0.5" y="0.5" width="29" height="29" rx="14.5" fill="white"
+            ></rect>
+            <rect
+              x="0.5"
+              y="0.5"
+              width="29"
+              height="29"
+              rx="14.5"
+              stroke="#5A5F99"></rect>
+            <path
+              d="M15.271 19.7669C14.7658 20.1865 14.2791 20.5874 13.7968 20.9926C13.5858 21.1685 13.382 21.3531 13.1752 21.5347C12.7604 21.8996 12.4475 21.8217 12.2551 21.2997C11.7556 19.9515 11.256 18.6047 10.7694 17.2521C10.6718 16.9811 10.5282 16.808 10.2497 16.7172C9.11571 16.3423 7.98886 15.9486 6.85626 15.5723C6.3237 15.3949 6.02656 15.0964 6.00215 14.6725C5.97488 14.1981 6.20599 13.8592 6.74573 13.6516C8.45108 12.9955 10.1622 12.3538 11.8704 11.7021C13.8557 10.9436 15.8395 10.1751 17.8248 9.41803C19.4325 8.8052 21.0417 8.20102 22.6508 7.59252C23.0212 7.45265 23.3829 7.45121 23.693 7.7295C24.0275 8.02943 24.0461 8.42308 23.9485 8.82683C23.4806 10.7345 23.0054 12.6422 22.5317 14.5485C21.979 16.7691 21.4235 18.9897 20.8723 21.2117C20.7029 21.8923 20.2981 22.3278 19.6062 22.4735C19.1454 22.5715 18.7593 22.3855 18.4076 22.1202C17.4802 21.4237 16.5601 20.7172 15.6357 20.0178C15.5237 19.9327 15.4045 19.8592 15.271 19.7669ZM23.1432 8.44327C23.1088 8.41731 23.0729 8.38992 23.0384 8.36396C17.6626 10.4173 12.2852 12.4692 6.90938 14.5211C6.90938 14.5716 6.90794 14.6235 6.9065 14.6739C8.22858 15.1238 9.55209 15.5737 10.8828 16.025C11.0909 15.8982 11.2818 15.7785 11.4756 15.6617C13.7064 14.3178 15.9385 12.9739 18.1693 11.63C18.7837 11.2594 19.3966 10.8903 20.011 10.5197C20.2608 10.3683 20.5235 10.25 20.7402 10.5485C20.9555 10.847 20.7574 11.0633 20.5421 11.2551C20.4172 11.3661 20.2837 11.4685 20.1589 11.5795C18.1607 13.3416 16.1625 15.1036 14.1643 16.8671C13.9892 17.0214 13.8126 17.1772 13.6016 17.3632C13.9274 17.6141 14.2088 17.8304 14.4901 18.0452C15.9644 19.1671 17.4329 20.2961 18.9143 21.4078C19.4167 21.7856 19.8703 21.6169 20.0239 21.0156C20.4373 19.4035 20.8407 17.7886 21.2441 16.1721C21.7608 14.1029 22.2733 12.0337 22.7843 9.96453C22.9092 9.4584 23.0241 8.95083 23.1447 8.44327H23.1432ZM11.4771 16.6869C11.7613 17.4598 12.0312 18.1952 12.301 18.9291C12.3685 19.0041 12.4187 18.9911 12.4546 18.9075C12.4546 18.4807 12.4546 18.0524 12.4546 17.6256C12.4546 17.3473 12.5522 17.1325 12.7733 16.9421C13.7667 16.0856 14.7457 15.2118 15.7318 14.3481C15.8409 14.2514 15.9673 14.1736 16.085 14.0871L15.9773 13.9703C14.493 14.8657 13.0102 15.7612 11.4785 16.6855L11.4771 16.6869ZM13.224 20.1923C13.2657 20.2081 13.3087 20.2254 13.3504 20.2413C13.7408 19.9082 14.1313 19.5737 14.5662 19.2031C14.1385 18.8758 13.7695 18.5946 13.3116 18.2442C13.2786 18.9738 13.2513 19.5838 13.224 20.1937V20.1923Z"
+              fill="#5A5F99"></path>
+          </svg>
+        </a>
+        <a href="tel:88007750861" class="mpp-contacts-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 30 30"
+            fill="none"
+          >
+            <rect
+              x="0.5"
+              y="0.5"
+              width="29"
+              height="29"
+              rx="14.5"
+              stroke="#F3704E"></rect>
+            <path
+              d="M8 10.5705C8.06463 10.1609 8.12723 9.68562 8.22013 9.2153C8.28577 8.8795 8.50085 8.63637 8.81287 8.48491C9.09157 8.34939 9.37027 8.21288 9.65604 8.09331C10.1145 7.9 10.478 8.00662 10.7436 8.41715C11.4433 9.49928 12.1391 10.5844 12.8298 11.6725C13.1256 12.1388 13.0176 12.5683 12.546 12.8672C12.2704 13.0416 11.9917 13.212 11.716 13.3854C11.5463 13.492 11.4918 13.6285 11.5534 13.8298C12.2098 15.9662 13.5154 17.5943 15.4703 18.7153C15.7682 18.8857 15.8601 18.8648 16.1105 18.6207C16.3317 18.4054 16.5468 18.1842 16.7709 17.972C17.1193 17.6412 17.5767 17.6362 17.918 17.97C18.8541 18.8857 19.7871 19.8044 20.7151 20.7291C21.0797 21.0918 21.0898 21.4804 20.7717 21.888C20.6131 22.0912 20.4526 22.2935 20.2951 22.4988C20.0396 22.8326 19.6993 23.001 19.2762 23C18.3018 22.997 17.3808 22.7459 16.4943 22.3742C13.7376 21.2164 11.5726 19.371 9.99633 16.857C9.06229 15.3653 8.44026 13.7561 8.15753 12.0252C8.0828 11.5689 8.05655 11.1045 8 10.5705Z"
+              fill="#F3704E"></path>
+            <path
+              d="M15 11C15.9545 11.1026 17.8636 11.9231 17.8636 14.3846M15.3182 9.15385C16.2727 9.25641 19.7727 10.3846 19.7727 14.3846M15.3182 7C16.2727 7.10256 22 7.92308 22 15"
+              stroke="#F3704E"
+              stroke-linecap="round"></path>
+          </svg>
+        </a>
+      </div>
+      <a href="/"><img class="logo" src="https://static.wow2print.com/storage/445/content/image/24598697365f1bb7936c404.39289550.svg"></a>
+      <Burger classList={["menu-button", "mpp-burger"]} />
+    </div>
+    <nav class="mpp-main-menu" style="background-color: rgb(255, 219, 175);">
+        <ul>
+            {
+                data.listItems.map( (item, index) => 
+                    <li class="mpp-main-menu-list-lvl-1">
+                        {
+                            item.href && <a href={item.href}>{item.title}</a>
+                        }
+                        {
+                            !item.href && <span>{item.title}</span>
+                        }
+                        {
+                            item?.listItems.length > 0 && <input id={`item-lvl-1-${item.id}`} type="checkbox" checked={index === 0 && "checked"} />
+                        }
+                        <ul class="content-grid">
+                            {
+                                item.listItems.map( _item => 
+                                    <li>
+                                        <a href={_item.href}>{_item.title}</a>
+                                    </li>
+                                )
+                            }
+                        </ul>
+                    </li>
+                )
+            }
+        </ul>
+    </nav>
+</header>
+
+
+<style lang="scss" is:global>
+    .mpp-headers {
+        & * {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;            
+        }
+
+        & a {
+            text-decoration: none;
+            color: inherit;            
+        }
+
+        &.content-grid {
+            row-gap: 0;
+        }
+    }
+    .mpp-headers * {
+
+    }
+    .mpp-headers a {
+
+    }
+    .mpp-header-mobile {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        position: relative;
+        padding: .6rem 0;
+        font-size: .75em;
+        font-weight: 600;
+
+        // & .logo {
+        //     margin: 0 11vw 0 0;
+        // }
+    }
+
+    .mpp-contacts {
+        display: flex;
+        align-items: center;
+        gap: .75em;
+    }
+
+    .mpp-contacts-icon svg {
+        box-shadow: 0 0 3px #000000bf;
+        border-radius: 15px;
+    }
+
+    .mpp-main-menu {
+        overflow-x: scroll;
+        & > ul {
+
+            display: flex;
+            align-items: center;
+            column-gap: 3em;
+            & > li {
+                white-space: nowrap;
+                position: relative;
+                &:has(input:checked) {
+                    & > ul {
+                        display: grid;
+                        row-gap: 1em;
+                        // flex-direction: column;
+                    }
+                }
+                & > a {
+                    display: inline-block;
+                    padding: .35em 0;
+                }
+                & > ul {
+                    display: none;
+                    position: fixed;
+                    top: 7rem;
+                    z-index: 1;
+                    left: 0;
+                    right: 0;
+                    background-color: #757575;
+                }
+            }
+        }
+        & a {
+            font-size: .75em;
+            font-weight: 600;
+        }
+    }
+
+    .mpp-burger {
+        width: min-content;
+        margin-left: auto;
+    }
+</style>
+
+<script>
+    const fixedDropMenu = () => {
+        
+    }
+    document.querySelector(".mpp-headers")
+</script>

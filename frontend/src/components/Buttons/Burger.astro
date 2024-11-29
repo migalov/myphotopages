@@ -1,0 +1,65 @@
+---
+const {classList} = Astro.props;
+---
+
+<label for="main-menu" class:list={classList} aria-labelledby="menuButtonLabel">
+    <input id="main-menu" class="menu-button__line" type="checkbox">
+    <!-- <span>
+        <span id="menuButtonLabel" style="display: none">Menu Button</span>
+    </span> -->
+    
+</label>
+<style lang="scss" is:global>
+    .menu-button {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        row-gap: 3px;
+    }
+
+    .menu-button__line {
+        appearance: none;
+        border: transparent;
+        outline: transparent;
+        margin: 0;
+        height: 1px;
+        
+    }
+
+    .menu-button__line,
+    .menu-button::before,
+    .menu-button::after {
+    content: "";
+        width: 22px;
+        height: 2px;
+        background-color: #000;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .menu-button:has( [type="checkbox"]:checked) {
+        & .menu-button__line {
+            opacity: 0;
+        }
+
+        &::before {
+            transform: translateY(5px) rotate(225deg);
+        }
+
+        &::after {
+            transform: translateY(-5px) rotate(-225deg);
+        }
+    } 
+
+    // .menu-button.is-opened .menu-button__line {
+    //     opacity: 0;
+    // }
+
+    // .menu-button.is-opened::before {
+    //     transform: translateY(5px) rotate(225deg);
+    // }
+
+    // .menu-button.is-opened::after {
+    //     transform: translateY(-5px) rotate(-225deg);
+    // }
+</style>

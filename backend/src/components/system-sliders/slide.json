@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_system_sliders_slides",
+  "info": {
+    "displayName": "Slide",
+    "icon": "picture"
+  },
+  "options": {},
+  "attributes": {
+    "srcDesktop": {
+      "type": "string"
+    },
+    "srcMobile": {
+      "type": "string"
+    },
+    "htmlContent": {
+      "type": "customField",
+      "options": {
+        "preset": "default"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "labelButton": {
+      "type": "string"
+    },
+    "linkButton": {
+      "type": "string"
+    }
+  }
+}

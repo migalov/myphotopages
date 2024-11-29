@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_navigation_list_items",
+  "info": {
+    "displayName": "ListItems",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "listItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "navigation.item"
+    }
+  }
+}

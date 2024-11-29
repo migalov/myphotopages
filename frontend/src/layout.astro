@@ -1,0 +1,85 @@
+---
+import Header from "./components/Header/index.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700"
+      rel="stylesheet"
+    />
+    <style lang="scss" is:global>
+      body {
+        margin: 0;
+        font-family: "Montserrat", sans-serif;
+      }
+      :root {
+        --primaryColor: #f3704e;
+        --secondColor: #f0f0f0;
+        --violetColor: #9747ff;
+        --orangeSecondColor: #f79767;
+        --elecPink: #ff3596;
+        --blackColor: #000;
+        --whiteColor: #fff;
+        --lavandaColor: #e7e2f6;
+        --greenColor: #deefea;
+        --firstFont: "Montserrat", sans-serif;
+        --defaultAnimate: ease 0.5s;
+      }
+      .content-grid {
+        row-gap: 2rem;
+      }
+
+      .content-grid,
+      .full-width {
+        --content-max-width: 100%;
+        --padding-inline: 1rem;
+
+        display: grid;
+        grid-template-columns:
+          [full-width-start]
+          2rem
+          [breakout-start]
+          minmax(0, 1fr)
+          [content-start]
+          minmax(0, 1200px)
+          [content-end]
+          minmax(0, 1fr)
+          [breakout-end]
+          2rem
+          [full-width-end];
+
+        & > * {
+          grid-column: content;
+        }
+
+        & > .breakout {
+          grid-column: breakout;
+        }
+
+        & > .full-width {
+          grid-column: full-width;
+        }
+      }
+
+      .full-width > *,
+      .content-grid > * {
+        grid-column: content;
+      }
+
+      .full-window {
+        grid-column: full-width;
+      }
+    </style></head
+  >
+
+  <body>
+    <Header />
+    <slot />
+  </body>
+</html>
